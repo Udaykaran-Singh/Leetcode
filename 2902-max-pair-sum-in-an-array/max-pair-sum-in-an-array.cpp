@@ -18,11 +18,11 @@ public:
             store[maxi].push_back(i);
         }
 
-        for(auto &[key, val] : store){
-            cout<<key<<": [";
-            for(auto i: val) cout<<i<<", ";
-            cout<<" ]"<<endl;
-        }cout<<endl;
+        // for(auto &[key, val] : store){
+        //     cout<<key<<": [";
+        //     for(auto i: val) cout<<i<<", ";
+        //     cout<<" ]"<<endl;
+        // }cout<<endl;
 
         for(auto &[key, val] : store){
             int max2 = -1, max1 = -1;
@@ -35,7 +35,7 @@ public:
                 }
             }
 
-            cout<<max1<<".   "<<max2<<endl;
+            // cout<<max1<<".   "<<max2<<endl;
 
             if(max2 != -1) ans = max(ans, max1 + max2); 
         }
