@@ -1,43 +1,43 @@
 class Solution {
 public:
     int maxSum(vector<int>& nums) {
-        map<int, list<int>> store;
+        vector<list<int>> buckets_for_digit(10);
         int ans = -1;
 
         for(int &i : nums){
-            int maxi = 0;
+            int max_digit = 0;
             int num = i;
 
             while(num){
                 int digit = num%10;
                 num /= 10;
 
-                maxi = max(maxi, digit);
+                max_digit = max(max_digit, digit);
             }
 
-            store[maxi].push_back(i);
+            buckets_for_digit[max_digit].push_back(i);
         }
 
-        // for(auto &[key, val] : store){
+        // for(auto &[key, val] : buckets_for_digit){
         //     cout<<key<<": [";
         //     for(auto i: val) cout<<i<<", ";
         //     cout<<" ]"<<endl;
         // }cout<<endl;
 
-        for(auto &[key, val] : store){
-            int max2 = -1, max1 = -1;
+        for(list<int> &val : buckets_for_digit){
+            int secondLargestNumber = -1, LargestNumber = -1;
 
             for(int i : val){
-                if(i <= max1 && i > max2) max2 = i;
-                if(i > max1){
-                    max2 = max1;
-                    max1 = i;
+                if(i <= LargestNumber && i > secondLargestNumber) secondLargestNumber = i;
+                if(i > LargestNumber){
+                    secondLargestNumber = LargestNumber;
+                    LargestNumber = i;
                 }
             }
 
-            // cout<<max1<<".   "<<max2<<endl;
+            // cout<<LargestNumber<<".   "<<secondLargestNumber<<endl;
 
-            if(max2 != -1) ans = max(ans, max1 + max2); 
+            if(secondLargestNumber != -1) ans = max(ans, LargestNumber + secondLargestNumber); 
         }
 
         return ans;
