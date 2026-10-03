@@ -19,17 +19,15 @@ public:
         sort(position.begin(), position.end());
 
         int i = 0, j = position[position.size() - 1];
-        int ans = 1;
         while(i < j){
             int mid = i + (j-i)/2;
             if(isPossible(position, m, mid)){
-                ans = mid;
                 i = mid + 1;
             }else{
                 j = mid;
             }
         }
 
-        return ans;
+        return i-1;
     }
 };
