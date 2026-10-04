@@ -1,46 +1,35 @@
 class Solution {
 public:
     int compress(vector<char>& chars) {
-        int total = 0, cnt = 1, j = 0;
+        int write = 0, i = 0, n = chars.size();
 
-        for(int i = 0; i < chars.size(); i++){
+        while (i < n) {
+            int j = i + 1;
+            while (j < n && chars[j] == chars[i]) ++j;
 
-            if(i == chars.size() - 1) goto jump;
+            chars[write++] = chars[i];
 
-            if(chars[i] == chars[i+1]){
-                cnt++;
-            }else{
-                jump:
-                if(cnt == 1){
-                    chars[j++] = chars[i];
-                    total += 1;
-                }else{
-                    chars[j++] = chars[i];
-                    stack<char> st;
+            int count = j - i;
+            if (count > 1) {
+                int start = write;
 
-                    while(cnt){
-                        int digit = cnt % 10;
-                        cnt /= 10;
-                        st.push(char('0' + digit));
-                    }
-
-                    total += st.size() + 1;
-
-                    while(!st.empty()){
-                        chars[j++] = st.top();
-                        st.pop();
-                    }
-                    
+                while (count > 0) {
+                    chars[write++] = char('0' + count % 10);
+                    count /= 10;
                 }
 
-                cnt = 1;
+                // Reverse the digits
+                int right = write - 1;
+                while (start < right) {
+                    char temp = chars[start];
+                    chars[start++] = chars[right];
+                    chars[right--] = temp;
+                }
             }
 
+            i = j;
         }
 
-
-
-        return total;
-
+        return write;
     }
 };
