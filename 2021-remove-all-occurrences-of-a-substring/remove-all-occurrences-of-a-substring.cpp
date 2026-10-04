@@ -35,9 +35,11 @@ public:
 
         string result = "";
         while (!st.empty()) {
-            result = st.top() + result;
+            result += st.top();
             st.pop();
         }
+
+        reverse(result.begin(), result.end());
 
         return result;
     }
