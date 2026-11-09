@@ -1,61 +1,28 @@
 class Solution {
-public:
-    bool checkValidString(string s) {
-        stack<char> st;
-        int left = 0;
+public: 
+    bool checkValidString(string& s) {
+        stack<int> left; 
+        stack<int> star;
 
-        for(char i: s){
-            if(i == '('){
-                st.push(i);
-                left++;
-            }
-            else if(i == '*'){
-                st.push(i);
-            }
+        for(int i = 0; i < s.length(); i++) {
+            char ch = s[i];
+
+            if(ch == '(') left.push(i);
+            else if(ch == '*') star.push(i);
             else{
-                if(left > 0){
-                    if(st.top() == '('){
-                        st.pop();
-                        left--;
-                    }
-                    else{
-                        int temp_star = 0;
-                        while(st.top() == '*'){
-                            temp_star++;
-                            st.pop();
-                        }
-
-                        st.pop();
-                        left--;
-
-                        while(temp_star){
-                            st.push('*');
-                            temp_star--;
-                        }
-                    }
-                }
-                else{
-                    if(!st.empty()){
-                        st.pop();
-                    }
-                    else return false;
-                }
-            }
-        }
-
-        int star = 0;
-
-        while(!st.empty()){
-            if(st.top() == '*') star++;
-            else{
-                if(star) star--;
+                if(!left.empty()) left.pop();
+                else if(!star.empty()) star.pop();
                 else return false;
             }
-
-            st.pop();
         }
 
-        return true;
+        while(!left.empty() && !star.empty()){
+            if(left.top() > star.top()) return false;
+            left.pop();
+            star.pop();
+        }
+
+        return left.empty();
     }
 };
 
