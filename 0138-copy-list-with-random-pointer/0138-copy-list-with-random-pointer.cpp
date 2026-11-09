@@ -18,9 +18,8 @@ class Solution {
 public:
     Node* copyRandomList(Node* head) {
         if(head == NULL) return head;
-        
-        Node* pointer = head;
 
+        Node* pointer = head;
         while(pointer){
             Node* temp = new Node(pointer->val);
             temp->next = pointer->next;
@@ -29,7 +28,6 @@ public:
         }
 
         pointer = head;
-
         while(pointer){
             if(pointer->random) pointer->next->random = pointer->random->next;
             pointer = pointer->next->next;
