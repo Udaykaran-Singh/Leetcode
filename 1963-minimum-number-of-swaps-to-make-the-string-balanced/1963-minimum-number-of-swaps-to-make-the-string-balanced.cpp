@@ -12,7 +12,7 @@ public:
         }
 
 
-        return ceil(1.0*right/2);
+        return (right + 1)/2;
     }
 };
 
