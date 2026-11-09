@@ -1,28 +1,21 @@
 class Solution {
-public: 
+public:
     bool checkValidString(string& s) {
-        stack<int> left; 
-        stack<int> star;
-
-        for(int i = 0; i < s.length(); i++) {
-            char ch = s[i];
-
-            if(ch == '(') left.push(i);
-            else if(ch == '*') star.push(i);
-            else{
-                if(!left.empty()) left.pop();
-                else if(!star.empty()) star.pop();
-                else return false;
-            }
+        int lefts = 0;
+        int rights = 0;
+        int len = s.size() - 1;
+        
+        for(int i = 0; i <= len; i++){
+            if(s[i] == '(' || s[i] == '*') lefts++;
+            else lefts--;
+            
+            if(s[len - i] == ')' || s[len - i] == '*') rights++;
+            else rights--;
+            
+            if(lefts < 0 || rights < 0) return false;
         }
-
-        while(!left.empty() && !star.empty()){
-            if(left.top() > star.top()) return false;
-            left.pop();
-            star.pop();
-        }
-
-        return left.empty();
+        
+        return true;
     }
 };
 
