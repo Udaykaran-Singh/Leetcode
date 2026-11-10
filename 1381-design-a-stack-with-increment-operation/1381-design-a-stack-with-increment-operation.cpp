@@ -1,34 +1,52 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
 class CustomStack {
     int maxSize;
     vector<int> store;
-    int i;
+    vector<int> inc; 
+    int i;           
 
 public:
     CustomStack(int maxSize) {
         this->i = 0;
         this->maxSize = maxSize;
         this->store.resize(maxSize, 0);
+        this->inc.resize(maxSize, 0);
     }
     
     void push(int x) {
-        if(i < maxSize) store[i++] = x;
-        return;
+        if (i < maxSize) {
+            store[i] = x;
+            inc[i] = 0;
+            i++;
+        }
     }
     
     int pop() {
-        if(i > 0){
-            return store[--i];
+        if (i <= 0) return -1;
+        
+        i--; 
+        int res = store[i] + inc[i];
+        
+        if (i > 0) {
+            inc[i - 1] += inc[i];
         }
-        else return -1;
+        
+        return res;
     }
     
     void increment(int k, int val) {
-        for(int j = 0; j < k && j < i; j++){
-            store[j] += val;
+        int idx = min(k, i) - 1;
+        
+        if (idx >= 0) {
+            inc[idx] += val;
         }
-        return;
     }
 };
+
 
 /**
  * Your CustomStack object will be instantiated and called as such:
