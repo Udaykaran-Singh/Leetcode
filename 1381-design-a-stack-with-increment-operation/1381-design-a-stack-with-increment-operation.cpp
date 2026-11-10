@@ -1,45 +1,31 @@
 class CustomStack {
     int maxSize;
-    stack<int> st;
+    vector<int> store;
+    int i;
 
 public:
-    CustomStack(int n) {
-        maxSize = n;
+    CustomStack(int maxSize) {
+        this->i = 0;
+        this->maxSize = maxSize;
+        this->store.resize(maxSize, 0);
     }
     
     void push(int x) {
-        if(st.size() < maxSize) st.push(x);
-
+        if(i < maxSize) store[i++] = x;
         return;
     }
     
     int pop() {
-        if(!st.empty()){
-            int temp = st.top();
-            st.pop();
-
-            return temp;
+        if(i > 0){
+            return store[--i];
         }
         else return -1;
     }
     
     void increment(int k, int val) {
-        stack<int> temp;
-        while(!st.empty()){
-            temp.push(st.top());
-            st.pop();
+        for(int j = 0; j < k && j < i; j++){
+            store[j] += val;
         }
-
-        while(!temp.empty()){
-            if(k){
-                st.push(temp.top() + val);
-                k--;
-            }
-            else st.push(temp.top());
-            
-            temp.pop();
-        }
-
         return;
     }
 };
