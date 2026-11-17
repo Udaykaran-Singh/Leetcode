@@ -13,28 +13,40 @@ public:
 }; */
 
 class Solution {
-    
-    void solve(Node* root, int key, vector<Node*>& ans){
-        if(!root) return;
-        
-        solve(root->left, key, ans);
-        
-        if(root->data < key) ans[0] = root;
-        else if(root->data > key && !ans[1]) ans[1] = root;
-        
-        if(ans[1]) return;
-        
-        solve(root->right, key, ans);
-        
-    }
-    
   public:
     vector<Node*> findPreSuc(Node* root, int key) {
-        // code here
-        vector<Node*> ans(2, NULL);
-        solve(root, key, ans);
-        
-        return ans;
+        Node* pre = NULL;
+        Node* suc = NULL;
+        Node* curr = root;
+
+        while(curr){
+
+            if(curr->data < key){
+                pre = curr;
+                curr = curr->right;
+            }
+            else if(curr->data > key){
+                suc = curr;
+                curr = curr->left;
+            }
+            else {
+                Node* temp = curr->left;
+                while(temp){
+                    pre = temp;
+                    temp = temp->right;
+                }
+
+                temp = curr->right;
+                while(temp){
+                    suc = temp;
+                    temp = temp->left;
+                }
+
+                break;
+            }
+        }
+
+        return {pre, suc};
     }
 };
 
